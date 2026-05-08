@@ -27,7 +27,7 @@ export function SocketProvider({ children }) {
     let reconnectTimeout;
 
     const connect = () => {
-      const WS_URL = process.env.REACT_APP_WS_URL || "ws://localhost:8000/ws";
+      const WS_URL = "wss://sentinel-fyp.duckdns.org:8000/ws";
       const ws = new WebSocket(WS_URL);
       wsRef.current = ws;
       setWsError(null);
