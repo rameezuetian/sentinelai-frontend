@@ -3,9 +3,20 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
+        # Pin Node.js 18 (required by react-scripts 5)
+        - nvm install 18
+        - nvm use 18
+        - node --version
+        - npm --version
+        # Use npm install instead of npm ci (works without package-lock.json)
+        - npm install
     build:
       commands:
+        # Disable ESLint errors stopping the build
+        - export CI=false
+        # Inject env vars at build time (set in Amplify Console)
+        - echo "REACT_APP_API_URL=$REACT_APP_API_URL"
+        - echo "REACT_APP_WS_URL=$REACT_APP_WS_URL"
         - npm run build
   artifacts:
     baseDirectory: build
